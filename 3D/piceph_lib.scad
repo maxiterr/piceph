@@ -58,17 +58,22 @@ module switch5p (guide=false) {
 module switch5pLock() {
   $fn=30;
   difference() {
-    hull() {
-      translate([1,0,0]) cylinder(d=8,h=4);
-      translate([78.5,0,0]) cylinder(d=8,h=4);
+    union() {
+      hull() {
+        translate([1,0,0]) cylinder(d=8,h=4);
+        translate([78.5,0,0]) cylinder(d=8,h=4);
+      }
+      translate([1.5,-9.7,0]) cube([5,19.4,4]);
+      translate([73,-9.7,0]) cube([5,19.4,4]);
     }
     translate([0,0,-4]) cylinder(d=3,h=10);
     translate([79.5,0,-4]) cylinder(d=3,h=10);
-    translate([3,-5,-1]) cube([73.5,10,3]);
+    translate([3,-7.7,-1]) cube([73.5,15.4,3]);
   }
+  
 }
 
-//translate([0,0,0]) switch5pLock();
+translate([-3.5,2.5,13]) switch5pLock();
 
 module power5v10a() {
   $fn=16;
@@ -112,7 +117,7 @@ module power5v10a() {
   }
 }
 
-power5v10a();
+//power5v10a();
 
 
 module fan_wheel(
@@ -290,5 +295,29 @@ module push_button_self_lock() {
   translate([3.5,-1,-25]) cube([0.5,2,5]);
   translate([-3.5,-1,-25]) cube([0.5,2,5]);
 }
+
+
+module screw(h=6,support=false, double=false) {
+  $fn=30;
+  // dans piceph v1: d ext = 6 trou = 2.5
+  // dans support trou 3.8
+  
+
+  difference() {
+    cylinder(h=h,d=6);
+    translate([0,0,-2]) cylinder(h=10,d=2.4);
+  }
+  if (support) {
+    difference() {
+      translate ([-3,0,0]) cube([6,support,h]);
+      translate([0,0,-2]) cylinder(h=10,d=5);
+    }
+    if (double) difference() {
+      translate ([-3,-support,0]) cube([6,support,h]);
+      translate([0,0,-2]) cylinder(h=10,d=5);
+    }
+  }
+}
+
 
 //push_button_self_lock();

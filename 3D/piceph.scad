@@ -32,23 +32,29 @@ module internal_elements(guide=false) {
 //translate([0,150,0]) internal_elements(guide=true);
 
 
+module all_ssd_with_flask() {
+  ssd_pack(n=6,guide=guide,usb=true);
+  translate([0,97.9,-2]) rotate([0,0,180])ssd_flask(top=true);
+  translate([70,8,-2]) ssd_flask();
+}
+
 module internal_elements_v2(guide=false) {
 
   translate ([60,-45,10]) {
     for (i = [0 : 2]){
-      translate ([58*i,0,0]) {
-        //rotate([0,0,180]) oPZ3_board(guide=guide);
-        //translate([-20,6,15]) rotate([20,00,90]) screen_joystick(guide=guide);
+      translate ([57*i,0,0]) {
+        rotate([0,0,180]) oPZ3_board(guide=guide);
+        translate([-25,6,15]) rotate([20,00,90]) screen_joystick(guide=guide);
       }
     }
   }
   
-  //translate([45,0,0]) rotate([0,90,-90]) {
+  translate([45,0,0]) rotate([0,90,-90]) all_ssd_with_flask();
   //  ssd_pack(n=6,guide=guide,usb=true);
   //  translate([0,97.9,-2]) rotate([0,0,180])ssd_flask(top=true);
   //  translate([70,8,-2]) ssd_flask();
   //}
-  //translate([155,-49,-69.5]) rotate([180,-90,0]) switch5p (guide=guide);
+  translate([155,-49,-69.5]) rotate([180,-90,0]) switch5p (guide=guide);
   translate([168,-52,6.5]) rotate([0,90,0]) switch5pLock();
   translate ([42,-55,-74]) rotate([90,0,0]) power5v10a();
   translate ([0,-50,-10]) rotate([0,90,0]) fan5010(guide=guide);
@@ -59,32 +65,20 @@ module internal_elements_v2(guide=false) {
   translate([30,-100,-55]) rotate([90,0,0]) push_button_self_lock();
 }
 
+
+
+
+module power_switch_holder() {
+  
+}
+  
+
 module base() {
     module position() {
         translate([0,0,2]) cube([8,6,3]);
         translate([0,0,5]) cube([2,6,3]);
     }
-  module screw(support=false, double=false) {
-    $fn=30;
-    // dans piceph v1: d ext = 6 trou = 2.5
-    // dans support trou 3.8
-    
 
-    difference() {
-      cylinder(h=5,d=6);
-      translate([0,0,-2]) cylinder(h=10,d=2.4);
-    }
-    if (support) {
-      difference() {
-        translate ([-3,0,0]) cube([6,support,5]);
-        translate([0,0,-2]) cylinder(h=10,d=5);
-      }
-      if (double) difference() {
-        translate ([-3,-support,0]) cube([6,support,5]);
-        translate([0,0,-2]) cylinder(h=10,d=5);
-      }
-    }
-  }
   //screw(support=4,double=true);
   difference() {
     translate([0,-97,-79.5])cube([170,100,3]);
@@ -98,8 +92,8 @@ module base() {
   translate([141.4,-50.5,-76.5]) cube([2,48.5,5]);
   // SSD holder
   translate([47,-6,-73]) rotate([-90,0,0]) screw(support=4);
-  translate([148,-6,-73]) rotate([-90,0,0]) screw(support=4,double=true);
-  translate([148.9,-6,3]) rotate([-90,0.7,0]) screw(support=74);
+  translate([148,-6,-73]) rotate([-90,0,0]) screw(support=4,double=false);
+  //translate([148.9,-6,3]) rotate([-90,0.7,0]) screw(support=74);
   
   // Switch holder
   translate([168,-52,-73]) rotate([-90,0,90]) screw(support=4);
@@ -118,10 +112,10 @@ module base() {
   translate([154,-55,-79]) rotate([0,0,180]) position();
   translate([100,-53,-79]) rotate([0,0,-90]) position();
   // Power screew
-  translate([46.5,-81.8,-79]) screw();
-  translate([149,-81.8,-79]) screw();
+  translate([46.5,-81.8,-79.5]) screw(h=5.5);
+  translate([149,-81.8,-79.5]) screw(h=5.5);
 }
 
-//internal_elements_v2(guide=true);
+internal_elements_v2(guide=true);
 base();
 
