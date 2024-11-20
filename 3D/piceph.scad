@@ -32,7 +32,7 @@ module internal_elements(guide=false) {
 //translate([0,150,0]) internal_elements(guide=true);
 
 
-module all_ssd_with_flask() {
+module all_ssd_with_flask(guide=false) {
   ssd_pack(n=6,guide=guide,usb=true);
   translate([0,97.9,-2]) rotate([0,0,180])ssd_flask(top=true);
   translate([70,8,-2]) ssd_flask();
@@ -43,8 +43,8 @@ module internal_elements_v2(guide=false) {
   translate ([60,-45,10]) {
     for (i = [0 : 2]){
       translate ([57*i,0,0]) {
-        rotate([0,0,180]) oPZ3_board(guide=guide);
-        translate([-25,6,15]) rotate([20,00,90]) screen_joystick(guide=guide);
+        //rotate([0,0,180]) oPZ3_board(guide=guide);
+        //translate([-25,6,15]) rotate([20,00,90]) screen_joystick(guide=guide);
       }
     }
   }
